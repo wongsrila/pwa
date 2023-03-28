@@ -18,9 +18,9 @@
 }
 
 body {
-  /* background-color: var(--color-black); */
+  background-color: var(--color-black);
   font-family: 'Inter', sans-serif;
-  color: var(--color-black);
+  color: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

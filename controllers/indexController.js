@@ -31,6 +31,10 @@ const indexGet = (req, res) => {
   res.render('index');
 };
 
+const scannerGet = (req, res) => {
+  res.render('scanner');
+};
+
 const resultGet = (req, res) => {
   async function getResponse() {
     const response = await fetch(
@@ -45,5 +49,6 @@ const resultGet = (req, res) => {
 
 module.exports = {
   indexGet,
+  scannerGet,
   resultGet,
 };

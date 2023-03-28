@@ -1,20 +1,18 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const indexRoutes = require('./routes/indexRoute');
+const routes = require('./routes/routes');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // DB Connection
 mongoose
-  .connect(
-    'mongodb+srv://firstwongsrila:wongbel2000@hva.9zshyav.mongodb.net/?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
-  )
+  .connect(process.env.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('DB connected successful'))
   .catch((err) => console.log(err));
 
@@ -26,6 +24,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/', indexRoutes);
+app.use('/', routes);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () =>
+  console.log(`Listening on port http://localhost:${port}/`),
+);
