@@ -52,11 +52,11 @@ const productSchema = new Schema(
       type: Number,
       // required: true,
     },
-    sugar: {
+    sugars: {
       type: Number,
       // required: true,
     },
-    amount: {
+    addedAmount: {
       type: Number,
       // required: true,
     },

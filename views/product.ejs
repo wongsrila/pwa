@@ -5,50 +5,29 @@
   </head>
   <body>
     <div class="container">
-      <a href="./scanner" class="barcode__btn">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 18.4852V9.99995M10 9.99995V1.51465M10 9.99995H18.4853M10 9.99995H1.51471"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </a>
       <div class="result__header">
-        <img src="<%= product.image_small_url %>" alt="" />
-        <h1><%= product.product_name %> - <%= product.quantity %></h1>
+        <img src="<%= product.imgUrl %>" alt="" />
+        <h1><%= product.name %> - <%= product.quantity %></h1>
         <label><%= product.brands %></label>
         <div class="result__core-nutri__wrapper">
           <div class="result__core-nutri">
-            <p class="is--text-green">
-              <%= product.nutriments['energy-kcal_100g'] %>
-            </p>
+            <p class="is--text-green"><%= product.calories %></p>
             <p>Calories</p>
           </div>
           <div class="result__core-nutri">
-            <p class="is--text-pink">
-              <%= product.nutriments.carbohydrates_100g %>
-            </p>
+            <p class="is--text-pink"><%= product.carbs %></p>
             <p>Carbs (g)</p>
           </div>
           <div class="result__core-nutri">
-            <p class="is--text-blue"><%= product.nutriments.proteins_100g %></p>
+            <p class="is--text-blue"><%= product.protein %></p>
             <p>Protein (g)</p>
           </div>
           <div class="result__core-nutri">
-            <p class="is--text-orange"><%= product.nutriments.fat_100g %></p>
+            <p class="is--text-orange"><%= product.fats %></p>
             <p>Fat (g)</p>
           </div>
         </div>
-        <form action="/save" method="POST">
+        <form>
           <input
             class="input_value"
             inputmode="numeric"
@@ -56,12 +35,11 @@
             type="number"
             placeholder="Add amount (gram / ml)"
             name="inputAmount"
-            required
+            value="<%= product.addedAmount %>"
+            disabled
           />
-          <input type="hidden" name="barcode" value="<%= code %>" />
-          <button class="save-item" type="submit">Add to diary</button>
         </form>
-        <p class="ingredients"><%= product.ingredients_text %></p>
+        <p class="ingredients"><%= product.ingredients %></p>
       </div>
       <footer>
         <a href="/">

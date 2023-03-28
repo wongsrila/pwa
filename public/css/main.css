@@ -85,7 +85,7 @@ header .progress-bar__wrapper {
 header .progress-bar__wrapper .progress-bar {
   position: absolute;
   height: 100%;
-  width: 50%;
+  width: attr(data-kcal-width);
   background-color: var(--color-green);
   border-radius: 0.5rem;
 }
@@ -323,6 +323,7 @@ footer a svg {
 }
 
 .input_value {
+  width: 100%;
   padding: 1rem;
   background-color: var(--color-dark-grey);
   color: var(--color-white);
@@ -346,6 +347,7 @@ input:focus {
 }
 
 .save-item {
+  border: none;
   background-color: var(--color-green);
   color: var(--color-white);
   text-decoration: none;
