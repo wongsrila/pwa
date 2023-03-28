@@ -4,7 +4,6 @@ const Product = require('../models/Product');
 const indexGet = (req, res) => {
   Product.find().then((items) => {
     let totalNutri = {};
-    console.log(items);
     if (items.length <= 0) {
       // Als er geen gegevens zijn, zet het dan op 0.
       totalNutri = {
@@ -126,10 +125,20 @@ const savePost = (req, res) => {
   getResponse();
 };
 
+const deletePost = (req, res) => {
+  Product.findByIdAndRemove(req.body.id)
+    .then(() => {
+      console.log('item verwijderd');
+      res.redirect('/');
+    })
+    .catch((err) => console.log(err));
+};
+
 module.exports = {
   indexGet,
   productGet,
   scannerGet,
   resultGet,
   savePost,
+  deletePost,
 };

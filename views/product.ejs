@@ -27,7 +27,7 @@
             <p>Fat (g)</p>
           </div>
         </div>
-        <form>
+        <form action="/delete" method="POST">
           <input
             class="input_value"
             inputmode="numeric"
@@ -38,6 +38,10 @@
             value="<%= product.addedAmount %>"
             disabled
           />
+          <input type="hidden" name="id" value="<%= product._id %>" />
+          <button class="save-item is--pink" type="submit">
+            Delete product
+          </button>
         </form>
         <p class="ingredients"><%= product.ingredients %></p>
       </div>
