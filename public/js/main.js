@@ -19,15 +19,5 @@ const markupData = (decodedData) => {
       // Stop failed, handle it.
     });
 
-  console.log(decodedData);
-
-  const data = { decodedData };
-
-  fetch('http://localhost:3000/scan', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  window.location.href = `/result/${decodedData}`;
 };

@@ -1,6 +1,7 @@
 const Product = require('../models/Product');
 
 const indexGet = (req, res) => {
+  // console.log('request object', req);
   // getResponse();
   // async function getResponse() {
   //   const response = await fetch(
@@ -30,28 +31,19 @@ const indexGet = (req, res) => {
   res.render('index');
 };
 
-const scanPost = (req, res) => {
-  const barcode = req.body.decodedData;
-
-  console.log(barcode);
-
-  res.redirect('/result');
-  // fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
-  //   .then((res) => res.json())
-  //   .then((res) => () => {
-  //     ress.redirect('/result');
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-};
-
 const resultGet = (req, res) => {
-  res.render('result');
+  async function getResponse() {
+    const response = await fetch(
+      `https://world.openfoodfacts.org/api/v0/product/${req.params.barcode}.json`,
+    );
+    const data = await response.json();
+
+    res.render('result', data);
+  }
+  getResponse();
 };
 
 module.exports = {
   indexGet,
-  scanPost,
   resultGet,
 };
