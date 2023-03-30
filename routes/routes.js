@@ -11,7 +11,7 @@ router.get('/result/:barcode', indexController.resultGet);
 router.post('/save', indexController.savePost);
 router.post('/delete', indexController.deletePost);
 
-// Acount Routes
+// Account Routes
 router.get('/account', accountController.indexGet);
 
 module.exports = router;

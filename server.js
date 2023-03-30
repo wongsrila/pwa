@@ -16,9 +16,11 @@ mongoose
   .then(() => console.log('DB connected successful'))
   .catch((err) => console.log(err));
 
-// Middleware
+// Setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
+
+// Middleware
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
