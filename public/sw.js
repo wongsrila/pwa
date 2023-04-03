@@ -1,4 +1,5 @@
 const staticCacheName = "static-site";
+const dynamicCacheName = "dynamic-site";
 const assets = [
   "/",
   "/icon/icon-192x192.png",
@@ -20,7 +21,21 @@ self.addEventListener("install", (evt) => {
 });
 
 self.addEventListener("activate", (evt) => {
-  console.log("activated");
+  evt.waitUntil(
+    caches
+      .keys()
+      .then((keyList) => {
+        return Promise.all(
+          keyList.map((key) => {
+            if (key !== staticCacheName) {
+              console.log("[ServiceWorker] Removing old cache", key);
+              return caches.delete(key);
+            }
+          })
+        );
+      })
+      .then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener("fetch", (evt) => {
