@@ -1,5 +1,22 @@
+const staticCacheName = "static-site";
+const assets = [
+  "/",
+  "/icon/icon-192x192.png",
+  "/icon/icon-256x256.png",
+  "/icon/icon-384x384.png",
+  "/icon/icon-512x512.png",
+  "/css/main.css",
+  "https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js",
+  "/js/scanner.js",
+];
+
 self.addEventListener("install", (evt) => {
-  console.log("installed", evt);
+  evt.waitUntil(
+    caches.open(staticCacheName).then((cache) => {
+      console.log("caching static assets");
+      cache.addAll(assets);
+    })
+  );
 });
 
 self.addEventListener("activate", (evt) => {
@@ -7,5 +24,9 @@ self.addEventListener("activate", (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log(evt);
+  evt.respondWith(
+    caches.match(evt.request).then((cacheRes) => {
+      return cacheRes || fetch(evt.request);
+    })
+  );
 });
