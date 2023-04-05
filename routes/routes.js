@@ -14,4 +14,7 @@ router.post('/delete', indexController.deletePost);
 // Account Routes
 router.get('/account', accountController.indexGet);
 
+// Offline route
+router.get('/offline', indexController.offlineGet);
+
 module.exports = router;

@@ -158,6 +158,10 @@ const deletePost = (req, res) => {
     .catch((err) => console.log(err));
 };
 
+const offlineGet = (req, res) => {
+  res.render('offline');
+};
+
 module.exports = {
   indexGet,
   productGet,
@@ -165,4 +169,5 @@ module.exports = {
   resultGet,
   savePost,
   deletePost,
+  offlineGet,
 };
