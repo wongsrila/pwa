@@ -85,7 +85,6 @@ header .progress-bar__wrapper {
 header .progress-bar__wrapper .progress-bar {
   position: absolute;
   height: 100%;
-  width: attr(data-kcal-width);
   background-color: var(--color-green);
   border-radius: 0.5rem;
 }

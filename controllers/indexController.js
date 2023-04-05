@@ -1,4 +1,4 @@
-const Product = require("../models/Product");
+const Product = require('../models/Product');
 
 // INDEX - GET
 const indexGet = (req, res) => {
@@ -23,7 +23,24 @@ const indexGet = (req, res) => {
         };
       });
     }
-    res.render("index", { items, totalNutri });
+
+    const userSettings = {
+      calories: 2500,
+      carbs: 300,
+      protein: 140,
+      fats: 70,
+    };
+
+    const nutriResult = {
+      calories: Math.round((100 / userSettings.calories) * totalNutri.calories),
+      carbs: Math.round((100 / userSettings.carbs) * totalNutri.carbs),
+      protein: Math.round((100 / userSettings.protein) * totalNutri.protein),
+      fats: Math.round((100 / userSettings.fats) * totalNutri.fats),
+    };
+
+    console.log(nutriResult);
+
+    res.render('index', { items, totalNutri, nutriResult, userSettings });
   });
 };
 
@@ -31,24 +48,24 @@ const indexGet = (req, res) => {
 const productGet = (req, res) => {
   Product.findById(req.params.barcode).then((product) => {
     console.log(product);
-    res.render("product", { product });
+    res.render('product', { product });
   });
 };
 
 // SCANNER - GET
 const scannerGet = (req, res) => {
-  res.render("scanner");
+  res.render('scanner');
 };
 
 // RESULT - GET
 const resultGet = (req, res) => {
   async function getResponse() {
     const response = await fetch(
-      `https://world.openfoodfacts.org/api/v0/product/${req.params.barcode}.json`
+      `https://world.openfoodfacts.org/api/v0/product/${req.params.barcode}.json`,
     );
     const data = await response.json();
 
-    res.render("result", data);
+    res.render('result', data);
   }
   getResponse();
 };
@@ -61,7 +78,7 @@ const savePost = (req, res) => {
 
   async function getResponse() {
     const response = await fetch(
-      `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`
+      `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`,
     );
     const data = await response.json();
 
@@ -77,25 +94,25 @@ const savePost = (req, res) => {
 
     // Calculate the added amount in nutritions
     const addedCalories = TotalCalc(
-      data.product.nutriments["energy-kcal_100g"],
-      inputAmount
+      data.product.nutriments['energy-kcal_100g'],
+      inputAmount,
     );
     const addedProtein = TotalCalc(
       data.product.nutriments.proteins_100g,
-      inputAmount
+      inputAmount,
     );
     const addedCarbs = TotalCalc(
       data.product.nutriments.carbohydrates_100g,
-      inputAmount
+      inputAmount,
     );
     const addedFats = TotalCalc(data.product.nutriments.fat_100g, inputAmount);
     const addedSalts = TotalCalc(
       data.product.nutriments.salt_100g,
-      inputAmount
+      inputAmount,
     );
     const addedSugars = TotalCalc(
       data.product.nutriments.sugars_100g,
-      inputAmount
+      inputAmount,
     );
 
     // Add to database
@@ -118,7 +135,7 @@ const savePost = (req, res) => {
     product
       .save()
       .then(() => {
-        res.redirect("/");
+        res.redirect('/');
       })
       .catch((err) => console.log(err));
   }
@@ -128,8 +145,8 @@ const savePost = (req, res) => {
 const deletePost = (req, res) => {
   Product.findByIdAndRemove(req.body.id)
     .then(() => {
-      console.log("item verwijderd");
-      res.redirect("/");
+      console.log('item verwijderd');
+      res.redirect('/');
     })
     .catch((err) => console.log(err));
 };
