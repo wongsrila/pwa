@@ -16,15 +16,16 @@ const indexGet = (req, res) => {
       // Als er wel gegevens zijn, laat die dan zien
       totalNutri = items.reduce(function (previousValue, currentValue) {
         return {
-          calories: previousValue.calories + currentValue.calories,
-          carbs: previousValue.carbs + currentValue.carbs,
-          protein: previousValue.protein + currentValue.protein,
-          fats: previousValue.fats + currentValue.fats,
+          calories: Math.round(previousValue.calories + currentValue.calories),
+          carbs: Math.round(previousValue.carbs + currentValue.carbs),
+          protein: Math.round(previousValue.protein + currentValue.protein),
+          fats: Math.round(previousValue.fats + currentValue.fats),
         };
       });
     }
 
     const userSettings = {
+      name: 'First',
       calories: 2500,
       carbs: 300,
       protein: 140,
@@ -38,8 +39,6 @@ const indexGet = (req, res) => {
       fats: Math.round((100 / userSettings.fats) * totalNutri.fats),
     };
 
-    console.log(nutriResult);
-
     res.render('index', { items, totalNutri, nutriResult, userSettings });
   });
 };
@@ -47,7 +46,6 @@ const indexGet = (req, res) => {
 // PRODUCT - GET
 const productGet = (req, res) => {
   Product.findById(req.params.barcode).then((product) => {
-    console.log(product);
     res.render('product', { product });
   });
 };
@@ -59,15 +57,22 @@ const scannerGet = (req, res) => {
 
 // RESULT - GET
 const resultGet = (req, res) => {
-  async function getResponse() {
-    const response = await fetch(
-      `https://world.openfoodfacts.org/api/v0/product/${req.params.barcode}.json`,
-    );
-    const data = await response.json();
+  const url = `https://world.openfoodfacts.org/api/v0/product/${req.params.barcode}.json`;
 
-    res.render('result', data);
-  }
-  getResponse();
+  fetch(url)
+    .then((result) => result.json())
+    .then((result) => resultHandle(result))
+    .catch((error) => {
+      console.log(error);
+    });
+
+  const resultHandle = (result) => {
+    if (result.status === 1) {
+      res.render('result', result);
+    } else {
+      res.render('scanner');
+    }
+  };
 };
 
 // SAVE - POST

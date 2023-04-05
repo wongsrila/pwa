@@ -1,5 +1,5 @@
 const indexGet = (req, res) => {
-  res.render('Account');
+  res.render('account');
 };
 
 module.exports = {
