@@ -12,22 +12,26 @@
         <div class="result__core-nutri__wrapper">
           <div class="result__core-nutri">
             <p class="is--text-green">
-              <%= product.nutriments['energy-kcal_100g'] %>
+              <%= Math.round(product.nutriments['energy-kcal_100g']) %>
             </p>
             <p>Calories</p>
           </div>
           <div class="result__core-nutri">
             <p class="is--text-pink">
-              <%= product.nutriments.carbohydrates_100g %>
+              <%= Math.round(product.nutriments.carbohydrates_100g) %>
             </p>
             <p>Carbs (g)</p>
           </div>
           <div class="result__core-nutri">
-            <p class="is--text-blue"><%= product.nutriments.proteins_100g %></p>
+            <p class="is--text-blue">
+              <%= Math.round(product.nutriments.proteins_100g) %>
+            </p>
             <p>Protein (g)</p>
           </div>
           <div class="result__core-nutri">
-            <p class="is--text-orange"><%= product.nutriments.fat_100g %></p>
+            <p class="is--text-orange">
+              <%= Math.round(product.nutriments.fat_100g) %>
+            </p>
             <p>Fat (g)</p>
           </div>
         </div>

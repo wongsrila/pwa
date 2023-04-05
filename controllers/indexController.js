@@ -129,12 +129,12 @@ const savePost = (req, res) => {
       quantity: data.product.quantity,
       ingredients: data.product.ingredients_text,
       categories: data.product.categories,
-      calories: addedCalories,
-      carbs: addedCarbs,
-      protein: addedProtein,
-      fats: addedFats,
-      salt: addedSalts,
-      sugars: addedSugars,
+      calories: Math.round(addedCalories),
+      carbs: Math.round(addedCarbs),
+      protein: Math.round(addedProtein),
+      fats: Math.round(addedFats),
+      salt: Math.round(addedSalts),
+      sugars: Math.round(addedSugars),
       addedAmount: inputAmount,
     });
     product
