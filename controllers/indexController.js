@@ -45,9 +45,11 @@ const indexGet = (req, res) => {
 
 // PRODUCT - GET
 const productGet = (req, res) => {
-  Product.findById(req.params.barcode).then((product) => {
-    res.render('product', { product });
-  });
+  Product.findById(req.params.barcode)
+    .then((product) => {
+      res.render('product', { product });
+    })
+    .catch((err) => console.error(err));
 };
 
 // SCANNER - GET
