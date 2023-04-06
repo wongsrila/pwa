@@ -30,11 +30,8 @@ let setCache = function (req, res, next) {
     // for the other requests set strict no caching parameters
     res.set('Cache-control', `no-store`);
   }
-  // remember to call next() to pass on the request
   next();
 };
-
-// now call the new middleware function in your app
 
 app.use(setCache);
 
