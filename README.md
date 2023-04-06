@@ -18,3 +18,21 @@ MVC (Model-View-Controller) is een software ontwerppatroon dat wordt gebruikt om
 In Node.js wordt MVC vaak gebruikt in combinatie met Express.js. In dit patroon wordt de routing en logica van de applicatie behandeld door de controller, de data wordt beheerd door de model en de presentatie van de gegevens wordt gedaan door de view. Ik heb zelf ook the routing weer opgesplitst.
 
 Het gebruik van MVC in Node.js maakt de code beter georganiseerd, gemakkelijker te onderhouden en meer schaalbaar, waardoor het een populaire keuze is voor de ontwikkeling van webapplicaties.
+
+## Serverside Rendering
+
+Serverside rendering (SSR) is een techniek waarbij webpagina's worden gerenderd op de server in plaats van op de client (browser). Serverside rendering (SSR) met Express.js is een manier om de prestaties van webapplicaties te verbeteren door de HTML-pagina's op de server te genereren en deze vervolgens naar de browser te sturen. Dit kan de laadtijd van de pagina verkorten en de gebruikerservaring verbeteren. Bovendien kan SSR de zoekmachineoptimalisatie (SEO) verbeteren omdat zoekmachines beter in staat zijn om inhoud op de pagina te indexeren.
+
+Als view template gebruik ik .ejs Dit is makkelijk te begrijpen en je behoud de layout van HTML.
+
+```javascript
+const productGet = (req, res) => {
+  Product.findById(req.params.barcode)
+    .then((product) => {
+      res.render('product', { product });
+    })
+    .catch((err) => console.error(err));
+};
+```
+
+Dit is een voorbeeld van een functie die wordt uitgevoerd door een route. Vervolgens zoekt hij data op vanuit de database en `res.render` die het naar de client.
