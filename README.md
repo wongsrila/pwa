@@ -63,3 +63,9 @@ router.get('/offline', indexController.offlineGet);
 
 module.exports = router;
 ```
+
+## Optimzing the app
+
+Ik heb een lighthouse test gedaan en vervolgens de meeste puntjes een voor een van gegaan. Mijn prioriteit was dat ik de PWA gedeelte 100% had. Sinds dat de opdracht is.
+
+![LIGHTHOUSE](./public/images/lighthouse_test.png)
