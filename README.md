@@ -71,3 +71,68 @@ Ik heb een lighthouse test gedaan en vervolgens de meeste puntjes een voor een v
 ![LIGHTHOUSE](./public/images/lighthouse_test.png)
 
 ![Pwa test](./public/images/pwa_test.png)
+
+## Critical Rendering Path
+
+Ik hebben ervoor gekozen om de perceived load speed en load responsiveness te optimaliseren, aangezien ik dit heb geïdentificeerd als gebieden waar de applicatie aanzienlijk kon verbeteren. Ik heb de statische bestanden van de Javascript en de CSS verkleind. Het implementeren van cachingstrategieën leidde ook tot betere laadprestaties bij herhaalde bezoeken aan onze applicatie.
+
+```javascript
+const CORE_CACHE = 1;
+const CORE_CACHE_NAME = `core-v${CORE_CACHE}`;
+const CORE_ASSETS = [
+  'manifest.json',
+  '/offline',
+  '/account',
+  '/scanner',
+  'css/main.css',
+  'js/main.js',
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CORE_CACHE_NAME).then((cache) => {
+      console.log('caching static assets');
+      cache.addAll(CORE_ASSETS);
+    }),
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('Activated');
+});
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  console.log('Fetching:' + req.url);
+
+  event.respondWith(
+    fetch(req)
+      .then((fetchRes) => {
+        return caches.open(CORE_CACHE_NAME).then((cache) => {
+          cache.put(req, fetchRes.clone());
+          return fetchRes;
+        });
+      })
+      .catch((err) => {
+        return caches.match(req).then((cachedRes) => {
+          if (cachedRes) {
+            return cachedRes;
+          } else {
+            return caches
+              .open(CORE_CACHE_NAME)
+              .then((cache) => cache.match('/offline'));
+          }
+        });
+      }),
+  );
+});
+```
+
+Ten slotte verbeterde ik het uitstellen en asynchroon laden van niet-kritieke JavaScript en CSS. Dit heb ik gedaan door DEFER te gebruiken op de scripts.
+
+```html
+<script defer src="/js/main.min.js"></script>
+<script defer src="/js/scanner.min.js"></script>
+```
+
+Deze gecombineerde optimalisaties hebben geleid tot een snellere, responsievere applicatie, wat de algehele gebruikerservaring verbetert.
