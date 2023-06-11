@@ -1,0 +1,4 @@
+# Ignore artifacts:
+public/js/main.min.js
+public/js/scanner.min.js
+public/css/main.min.css

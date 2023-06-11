@@ -1,5 +1,5 @@
 const html5QrCode = new Html5Qrcode('reader');
-const config = { fps: 10, qrbox: 200 };
+const config = { fps: 10, qrbox: 200, rememberLastUsedCamera: true };
 
 html5QrCode
   .start({ facingMode: 'environment' }, config, (decodedData) => {

@@ -4,7 +4,8 @@
     <%- include('./partials/head') %>
   </head>
   <body>
-    <h1>Account</h1>
+    <div id="loader">Its loading</div>
+    <h1 id="content" style="display: none">Account</h1>
     <footer>
       <a href="/">
         <svg viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,6 +32,6 @@
         <p class="is--text-green">Me</p>
       </a>
     </footer>
-    <script src="/js/main.js"></script>
+    <script defer src="/js/main.min.js"></script>
   </body>
 </html>
