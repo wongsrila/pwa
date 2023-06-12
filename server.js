@@ -21,18 +21,18 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 // Cache Headers
-// let setCache = function (req, res, next) {
-//   const period = 60 * 5;
+let setCache = function (req, res, next) {
+  const period = 60 * 5;
 
-//   if (req.method == 'GET') {
-//     res.set('Cache-control', `public, max-age=${period}`);
-//   } else {
-//     res.set('Cache-control', `no-store`);
-//   }
+  if (req.method == 'GET') {
+    res.set('Cache-control', `public, max-age=${period}`);
+  } else {
+    res.set('Cache-control', `no-store`);
+  }
 
-//   next();
-// };
-// app.use(setCache);
+  next();
+};
+app.use(setCache);
 
 // Middleware
 app.use(express.static(path.join(__dirname, '/public')));

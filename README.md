@@ -77,55 +77,18 @@ Ik heb een lighthouse test gedaan en vervolgens de meeste puntjes een voor een v
 Ik hebben ervoor gekozen om de perceived load speed en load responsiveness te optimaliseren, aangezien ik dit heb geïdentificeerd als gebieden waar de applicatie aanzienlijk kon verbeteren. Ik heb de statische bestanden van de Javascript en de CSS verkleind. Het implementeren van cachingstrategieën leidde ook tot betere laadprestaties bij herhaalde bezoeken aan onze applicatie.
 
 ```javascript
-const CORE_CACHE = 1;
-const CORE_CACHE_NAME = `core-v${CORE_CACHE}`;
-const CORE_ASSETS = [
-  'manifest.json',
-  '/offline',
-  '/account',
-  '/scanner',
-  'css/main.css',
-  'js/main.js',
-];
+let setCache = function (req, res, next) {
+  const period = 60 * 5;
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CORE_CACHE_NAME).then((cache) => {
-      console.log('caching static assets');
-      cache.addAll(CORE_ASSETS);
-    }),
-  );
-});
+  if (req.method == 'GET') {
+    res.set('Cache-control', `public, max-age=${period}`);
+  } else {
+    res.set('Cache-control', `no-store`);
+  }
 
-self.addEventListener('activate', (event) => {
-  console.log('Activated');
-});
-
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  console.log('Fetching:' + req.url);
-
-  event.respondWith(
-    fetch(req)
-      .then((fetchRes) => {
-        return caches.open(CORE_CACHE_NAME).then((cache) => {
-          cache.put(req, fetchRes.clone());
-          return fetchRes;
-        });
-      })
-      .catch((err) => {
-        return caches.match(req).then((cachedRes) => {
-          if (cachedRes) {
-            return cachedRes;
-          } else {
-            return caches
-              .open(CORE_CACHE_NAME)
-              .then((cache) => cache.match('/offline'));
-          }
-        });
-      }),
-  );
-});
+  next();
+};
+app.use(setCache);
 ```
 
 Ook heb ik lazy loading toegepast. Dit helpt ook met de gebruikerservaring. Zo hoeft niet alle onzigbare foto's al geladen te worden.
