@@ -6,7 +6,7 @@
   <body>
     <div class="container">
       <div class="result__header">
-        <img src="<%= product.image_small_url %>" alt="" />
+        <img loading="lazy" src="<%= product.image_small_url %>" alt="" />
         <h1><%= product.product_name %> - <%= product.quantity %></h1>
         <label><%= product.brands %></label>
         <div class="result__core-nutri__wrapper">

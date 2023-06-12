@@ -20,17 +20,19 @@ mongoose
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
-let setCache = function (req, res, next) {
-  const period = 365 * 24 * 60 * 60;
-  if (req.method == 'GET') {
-    res.set('Cache-control', `public, max-age=${period}`);
-  } else {
-    res.set('Cache-control', `no-store`);
-  }
-  next();
-};
+// Cache Headers
+// let setCache = function (req, res, next) {
+//   const period = 60 * 5;
 
-app.use(setCache);
+//   if (req.method == 'GET') {
+//     res.set('Cache-control', `public, max-age=${period}`);
+//   } else {
+//     res.set('Cache-control', `no-store`);
+//   }
+
+//   next();
+// };
+// app.use(setCache);
 
 // Middleware
 app.use(express.static(path.join(__dirname, '/public')));

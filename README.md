@@ -128,6 +128,8 @@ self.addEventListener('fetch', (event) => {
 });
 ```
 
+Ook heb ik lazy loading toegepast. Dit helpt ook met de gebruikerservaring. Zo hoeft niet alle onzigbare foto's al geladen te worden.
+
 Ten slotte verbeterde ik het uitstellen en asynchroon laden van niet-kritieke JavaScript en CSS. Dit heb ik gedaan door DEFER te gebruiken op de scripts.
 
 ```html
